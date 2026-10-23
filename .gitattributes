@@ -1,0 +1,5 @@
+#Com isso, o Git grava e entrega todos os arquivos de texto com quebra de linha LF, inclusive no Windows. Sem ele, quem clona no Windows recebe CRLF e o Biome acusa erro de formatação em arquivos que ninguém mexeu. Se algum arquivo já tiver sido commitado antes deste passo, rodem git add --renormalize . uma vez.
+
+* text=auto eol=lf
+*.png binary
+*.ico binary

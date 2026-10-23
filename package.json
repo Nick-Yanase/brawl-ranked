@@ -1,0 +1,22 @@
+{
+  "name": "brawl-ranked",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.14.0",
+  "scripts": {
+    "dev:api": "pnpm --filter @brawl/api dev",
+    "dev:web": "pnpm --filter @brawl/web dev",
+    "sync": "pnpm --filter @brawl/sync dev",
+    "db:generate": "pnpm --filter @brawl/db generate",
+    "db:migrate": "pnpm --filter @brawl/db migrate",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "test": "vitest run",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}
