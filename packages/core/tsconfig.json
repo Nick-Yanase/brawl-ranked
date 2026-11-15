@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "lib": ["ES2022", "DOM"] },
+  "include": ["src", "*.ts", "tsconfig.json", "../shared/src/errors.ts", "../shared/src/time.ts"]
+}
