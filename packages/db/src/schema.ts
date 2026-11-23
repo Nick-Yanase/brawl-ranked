@@ -16,15 +16,21 @@ export const authUsers = auth.table("users", { id: uuid("id").primaryKey() });
 
 // ---------- Usuários ----------
 
-export const profiles = pgTable("profiles", {
-  id: uuid("id")
-    .primaryKey()
-    .references(() => authUsers.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
-  playerTag: text("player_tag").notNull().unique(),
-  lastSyncedAt: timestamp("last_synced_at", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-});
+export const profiles = pgTable(
+  "profiles",
+  {
+    id: uuid("id")
+      .primaryKey()
+      .references(() => authUsers.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    playerTag: text("player_tag").notNull(), // não é única: veja o guia 1
+    lastSyncedAt: timestamp("last_synced_at", { withTimezone: true }),
+    // Último pedido de sync manual, mesmo que tenha falhado: é o que o cooldown confere (guia 2)
+    syncRequestedAt: timestamp("sync_requested_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("profiles_tag_idx").on(t.playerTag)],
+);
 
 // ---------- Catálogo (preenchido pela BrawlAPI) ----------
 
