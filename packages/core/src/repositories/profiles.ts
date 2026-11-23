@@ -16,10 +16,6 @@ export async function markSynced(db: Db, userId: string) {
   await db.update(profiles).set({ lastSyncedAt: new Date() }).where(eq(profiles.id, userId));
 }
 
-export async function listProfilesToSync(db: Db) {
-  return db.select({ id: profiles.id, playerTag: profiles.playerTag }).from(profiles);
-}
-
 /**
  * Reserva o direito de sincronizar: grava sync_requested_at só se o último pedido tiver mais de
  * `cooldownMs`. É um único UPDATE, então dois pedidos simultâneos nunca passam juntos, e a reserva
