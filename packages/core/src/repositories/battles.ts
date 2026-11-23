@@ -14,7 +14,12 @@ export async function saveBattles(db: Db, userId: string, parsed: ParsedBattle[]
     // 1. Mapas e brawlers que ainda não estão no catálogo (o nome bonito vem da BrawlAPI depois)
     await tx
       .insert(maps)
-      .values(uniqueBy(parsed.map((b) => ({ id: b.mapId, name: b.mapName, mode: b.mode })), (m) => m.id))
+      .values(
+        uniqueBy(
+          parsed.map((b) => ({ id: b.mapId, name: b.mapName, mode: b.mode })),
+          (m) => m.id,
+        ),
+      )
       .onConflictDoNothing();
     await tx
       .insert(brawlers)

@@ -30,7 +30,9 @@ export async function battleHash(battleTime: string, tags: string[]): Promise<st
   const input = `${battleTime}|${[...tags].sort().join(",")}`;
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(input));
   // 16 bytes (32 caracteres hex) bastam para não haver colisão e economizam espaço
-  return Array.from(new Uint8Array(digest).slice(0, 16), (b) => b.toString(16).padStart(2, "0")).join("");
+  return Array.from(new Uint8Array(digest).slice(0, 16), (b) =>
+    b.toString(16).padStart(2, "0"),
+  ).join("");
 }
 
 const smallestTag = (team: Player[]) => team.map((p) => p.tag).sort()[0] ?? "";
@@ -64,7 +66,10 @@ export async function parseRankedBattle(
   const players = teams.flatMap((team, index) => team.map((p) => ({ ...p, team: index })));
 
   return {
-    id: await battleHash(item.battleTime, players.map((p) => p.tag)),
+    id: await battleHash(
+      item.battleTime,
+      players.map((p) => p.tag),
+    ),
     mapId: event.id,
     mapName: event.map ?? "Desconhecido",
     mode: event.mode ?? battle.mode ?? "unknown",
